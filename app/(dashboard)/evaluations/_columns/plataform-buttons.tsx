@@ -4,16 +4,6 @@
 import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import axios from "axios";
-import { getSubscriptionPlanId } from "@/utils/plataform-helper";
-import { BROKER_CONFIG } from "@/utils/broker-config";
-
-// Crie uma API route local para fazer a requisição
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const createBrokerAccount = async (payload: any) => {
-  const response = await axios.post("/api/broker/create-account", payload);
-  return response.data;
-};
 
 interface Client {
   id?: string;
@@ -35,38 +25,24 @@ export function PlatformButtons({
 }: PlatformButtonsProps) {
   const { toast } = useToast();
 
-  const handleCreateAccount = async () => {
+  const handleStartEvaluation = async () => {
     try {
-      const [firstName, ...lastNameParts] = client.name.split(" ");
-      const lastName = lastNameParts.join(" ");
-
-      const payload = {
-        request: "prop_trading_user_subscription",
-        email: client.email,
-        documentType: 1,
-        document: client.cpf.replace(/\D/g, ""),
-        firstName,
-        lastName,
-        dateOfBirth: client.birthDate.toISOString().split("T")[0],
-        subscriptionPlanId: getSubscriptionPlanId(client.platform),
-        testAccount: BROKER_CONFIG.testAccount,
-        authenticationCode: BROKER_CONFIG.authenticationCode,
-      };
-
-      const response = await createBrokerAccount(payload);
-
-      if (response.success) {
-        toast({
-          title: "Sucesso",
-          description: "Conta criada na corretora",
-        });
-        if (client.id) onStartEvaluation(client.id);
+      if (!client.id) {
+        throw new Error("ID do cliente não encontrado");
       }
+
+      // Chama diretamente a função para atualizar o status no banco
+      onStartEvaluation(client.id);
+
+      toast({
+        title: "Sucesso",
+        description: "Plataforma liberada com sucesso",
+      });
     } catch (error) {
-      console.error("Erro na integração:", error);
+      console.error("Erro ao liberar plataforma:", error);
       toast({
         title: "Erro",
-        description: "Falha ao criar conta na corretora",
+        description: "Falha ao liberar plataforma",
         variant: "destructive",
       });
     }
@@ -74,7 +50,7 @@ export function PlatformButtons({
 
   return (
     <Button
-      onClick={handleCreateAccount}
+      onClick={handleStartEvaluation}
       variant="outline"
       size="sm"
       className="bg-green-500/10 text-green-500 hover:bg-green-500/20 border-green-500/20"

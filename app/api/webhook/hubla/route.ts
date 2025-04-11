@@ -1,4 +1,4 @@
-//trader-evaluation-fx/app/api/webhook/hubla/route.ts
+//fanini-control/app/api/webhook/hubla/route.ts
 import { HublaService } from "@/lib/services/hubla";
 import { HublaWebhookPayload } from "@/app/types/hubla";
 import { NextRequest } from "next/server";

@@ -18,10 +18,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useState } from "react";
-import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
-import { getSubscriptionPlanId } from "@/utils/plataform-helper";
-import { BROKER_CONFIG } from "@/utils/broker-config";
 
 const finishEvaluationSchema = z.object({
   status: z.enum(["Aprovado", "Reprovado"]),
@@ -40,7 +37,6 @@ interface FinishEvaluationFormProps {
 }
 
 export function FinishEvaluationForm({
-  client,
   onSubmit,
   onCancel,
 }: FinishEvaluationFormProps) {
@@ -53,19 +49,12 @@ export function FinishEvaluationForm({
   const handleSubmit = async (data: FinishEvaluationForm) => {
     setIsLoading(true);
     try {
-      // Primeiro, cancela a conta na corretora
-      const cancelResponse = await axios.post("/api/broker/cancel-account", {
-        document: client.cpf.replace(/\D/g, ""),
-        subscriptionPlanId: getSubscriptionPlanId(client.platform),
-        testAccount: BROKER_CONFIG.testAccount,
-      });
-
-      if (!cancelResponse.data.success) {
-        throw new Error("Falha ao cancelar conta na corretora");
-      }
-
-      // Se o cancelamento foi bem sucedido, prossegue com a finalização
+      // Chama diretamente a função onSubmit para atualizar o banco de dados
       await onSubmit(data);
+      toast({
+        title: "Sucesso",
+        description: `Avaliação finalizada como ${data.status.toLowerCase()}.`,
+      });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("Erro ao finalizar avaliação:", error);

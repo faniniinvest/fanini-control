@@ -1,4 +1,4 @@
-// trader-evaluation-fx/app/api/registration/process/route.ts
+// fanini-control/app/api/registration/process/route.ts
 import { prisma } from "@/lib/prisma";
 import { NextRequest } from "next/server";
 

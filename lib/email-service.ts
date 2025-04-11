@@ -1,4 +1,4 @@
-// trader-evaluation-fx/lib/email-service.ts
+// fanini-control/lib/email-service.ts
 import nodemailer, { TransportOptions } from "nodemailer";
 
 const transporter = nodemailer.createTransport({

@@ -28,9 +28,9 @@ export async function getEvaluationClients() {
 
 export async function startEvaluation(clientId: string) {
   const startDate = new Date();
-  // Calculando a data de fim (60 dias após o início)
+  // Calculando a data de fim (30 dias após o início)
   const endDate = new Date(startDate);
-  endDate.setDate(endDate.getDate() + 60);
+  endDate.setDate(endDate.getDate() + 30);
 
   await prisma.client.update({
     where: { id: clientId },

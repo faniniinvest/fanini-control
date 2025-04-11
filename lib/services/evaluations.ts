@@ -1,4 +1,4 @@
-// trader-evaluation-fx/lib/services/evaluations.ts
+// fanini-control/lib/services/evaluations.ts
 import { prisma } from "@/lib/prisma";
 
 interface GetClientEvaluationsParams {

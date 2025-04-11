@@ -1,4 +1,4 @@
-// trader-evaluation-fx/types/hubla.ts
+// fanini-control/types/hubla.ts
 export interface HublaUser {
   id: string;
   firstName: string;

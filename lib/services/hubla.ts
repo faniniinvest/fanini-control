@@ -1,4 +1,4 @@
-// trader-evaluation-fx/lib/services/hubla.ts
+// fanini-control/lib/services/hubla.ts
 import { prisma } from "@/lib/prisma";
 import { HublaWebhookPayload, HublaPaymentData } from "@/app/types/hubla";
 import crypto from "crypto";

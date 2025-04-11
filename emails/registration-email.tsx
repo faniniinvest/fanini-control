@@ -1,4 +1,4 @@
-// trader-evaluation-fx/emails/registration-email.tsx
+// fanini-control/emails/registration-email.tsx
 import {
   Html,
   Container,

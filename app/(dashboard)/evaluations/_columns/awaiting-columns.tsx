@@ -1,7 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Client } from "@/app/types";
-//import { Button } from "@/components/ui/button";
-//import { Play } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { PlatformButtons } from "./plataform-buttons";
